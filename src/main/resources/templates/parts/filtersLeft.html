@@ -1,0 +1,36 @@
+<form xmlns:th="http://www.thymeleaf.org" th:if="${(products!=null)&&(currentUrl!='/')}" method="get" th:action="@{{url}(url=${currentUrl})}">
+    <input type="hidden" name="size" th:value="${products.size}">
+    <input type="hidden" name="sort" th:value="${sortUrl}">
+    <h4 class="mt-4">Фильтры</h4>
+    <h5 class="mt-3">Цена:</h5>
+    <div class="row">
+        <div class="col-2">
+            <label class="col-form-label" for="priceFrom">от</label>
+        </div>
+        <div class="col-10">
+            <input class="form-control form-control-sm mb-2" type="text" name="priceFrom" th:value="${priceFrom==null?'':priceFrom}"  id="priceFrom"/>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-2">
+            <label class="col-form-label " for="priceTo">до</label>
+        </div>
+        <div class="col-10">
+            <input class="form-control form-control-sm mb-2" type="text" name="priceTo" th:value="${priceTo==null?'':priceTo}"  id="priceTo"/>
+        </div>
+    </div>
+
+    <div th:if="${filters!=null&&filters.isEmpty==false}">
+        <div th:each="filter:${filters.keySet()}">
+
+            <h5 th:text="${filter}+':'" class="mt-3">Filter</h5>
+            <div class="form-check" th:each="val:${filters.get(filter)}">
+                <input class="form-check-input" type="checkbox" th:name="${filter}" th:value="${val}" th:attr="checked = ${#lists.contains(filterChecked,filter+'='+val)?'true':'false'}" th:id="${val}">
+                <label class="form-check-label" th:for="${val}" th:text="${val}">
+                    Checkbox
+                </label>
+            </div>
+        </div>
+    </div>
+    <input class="mt-3 btn btn-secondary" type="submit" value="Применить"/>
+</form>

@@ -1,0 +1,54 @@
+
+<div xmlns:th="http://www.thymeleaf.org" th:replace="~{parts/common::common(~{::#content},'Корзина')}">
+    <th:block id="content">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item">
+                <a th:href="@{/}">Home</a>
+            </li>
+            <li class="breadcrumb-item">
+                <a th:href="@{/cart}" aria-current="page" class="active">Cart</a>
+            </li>
+        </ol>
+
+        <div class="row" th:unless="${cart.isEmpty()}">
+            <div class="col-md-9">
+
+                <div class="d-none d-md-flex row row-cols-6 ">
+                    <div class="col-1"></div>
+                    <div class="col-2"></div>
+                    <div class="col-3 fw-bold">Товар</div>
+                    <div class="col-2 fw-bold">Зa шт.</div>
+                    <div class="col-2 fw-bold">Кол-во</div>
+                    <div  class="col-2 fw-bold">Цена</div>
+                </div>
+                <hr>
+                <th:block th:each="c:${cart}">
+                    <div th:replace="~{parts/cartItemCard::cartItemCard(${c})}"></div>
+                    <hr>
+                </th:block>
+
+            </div>
+
+            <div class="col-md-3" th:unless="${cart.isEmpty()}">
+                <div class="div">
+                    <div class="col-1 fw-bold">Итого</div>
+                    <hr class="d-none d-md-block">
+                    <h4 th:text="${#strings.replace(bill,'.0','')}+' Р'">100 000 P</h4>
+                    <a  class="btn btn-primary btn-lg mt-2 w-100" th:href="@{/buy-form}">Оформить заказ</a>
+                </div>
+
+                <!--div class=" border">
+                    <h5  class="border-bottom card-title p-1">Итого</h5>
+                    <h4 class="mt-1">100 000 P</h4>
+                    <button type="button" class="btn btn-primary btn-lg mt-2 w-100" th:href="@{/buy-form}">Оформить заказ</button>
+                </div-->
+
+            </div>
+            <script th:src="@{/static/js/cart.js}"></script>
+        </div>
+
+
+        <h3 th:if="${cart.isEmpty()}">Ваша корзина пуста...</h3>
+
+    </th:block>
+</div>

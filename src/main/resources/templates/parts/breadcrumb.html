@@ -1,0 +1,18 @@
+<nav aria-label="breadcrumb" xmlns:th="http://www.thymeleaf.org" th:with="prCat=${product!=null?product.category:null}">
+    <ol class="breadcrumb"  th:with="thisCat=${thisCat!=null?thisCat:prCat}">
+        <li class="breadcrumb-item">
+            <a th:href="@{/}">Home</a>
+        </li>
+        <th:block th:if="${thisCat!=null}">
+            <li  class="breadcrumb-item" th:each="crumb,info:${catalog.get(__${thisCat.id}__).breadcrumb}">
+                <a th:href="@{${catalog.get(__${crumb}__).alias}}" th:text="${catalog.get(__${crumb}__).name}">Crumb</a>
+            </li>
+        </th:block>
+        <li th:if="${product}" class="breadcrumb-item" >
+            <a th:href="@{{alias}/{productAlias}
+                        (alias=${catalog.get(product.category.id).alias},
+                        productAlias=${product.alias!=null?product.alias+'-id-'+product.id:'id-'+product.id})}"
+               th:text="${product.name}">Crumb</a>
+        </li>
+    </ol>
+</nav>

@@ -1,0 +1,14 @@
+
+<ul class="list-group" xmlns:th="http://www.thymeleaf.org"
+    th:with="params=${products!=null?'?page=1&size='+products.size+(sortUrl!=null?'&sort='+sortUrl:''):''}">
+        <a th:each="cat:${catalog.values}"
+           th:with="aliasUrl=(${cat.alias}+${params})"
+           class="list-group-item list-group-item-action"
+           th:text="${cat.depth!=0?'- ':''}+${cat.name}"
+
+           th:href="@{${aliasUrl}}"
+           th:classappend="${thisCat!=null&&cat.id==thisCat.id?'active':''}"
+           th:style="'padding-left:'+(${cat.depth}*10+20)+'px'">
+            CatName
+        </a>
+</ul>

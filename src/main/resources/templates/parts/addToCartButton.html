@@ -1,0 +1,13 @@
+<div xmlns:th="http://www.thymeleaf.org">
+  <div th:classappend="${#arrays.contains(cartMap.keySet(), product.id)}?'d-none':'d-block'"
+       onclick="plusProduct(this)" th:data-id="${product.id}" class="btn btn-primary ms-auto px-2 py-1 no" >
+    В корзину
+  </div>
+
+  <div class="btn-group btn-group-sm  yes"  th:data-id="${product.id}"
+       th:classappend="${#arrays.contains(cartMap.keySet(), product.id)}?'d-flex':'d-none'">
+    <button type="button" onclick="minusProduct(this)" class="btn btn-outline-primary">-</button>
+    <div class="px-3 border-primary border-top border-bottom align-middle p-0" th:text="${cartMap.get(product.id)!=null?cartMap.get(product.id):0}" style="text-align:center;">0</div>
+    <button type="button" onclick="plusProduct(this)" class="btn btn-outline-primary">+</button>
+  </div>
+</div>

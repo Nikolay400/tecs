@@ -1,0 +1,139 @@
+<div xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml" th:fragment="navbar" >
+
+    <nav class="navbar navbar-expand-md bg-body-tertiary" >
+        <div class="container">
+
+            <a class="navbar-brand" href="/">Tecs</a>
+
+            <form class="d-flex w-50 order-md-1 order-sm-0 mt-3" style="min-width:30%" role="search" method="get"  th:action="@{/}">
+                <input class="form-control me-2" style="max-width:250px;" type="search" placeholder="Search" th:value="${search!=null?search:''}" aria-label="Search" name="search"/>
+                <button class="btn btn-outline-success" type="submit">Find</button>
+            </form>
+
+            <button class="navbar-toggler order-md-2 order-sm-0 " type="button" data-bs-toggle="collapse" data-bs-target=".dual-collapse2" aria-controls=".dual-collapse2" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse dual-collapse2 me-3 order-md-0">
+                <ul class="navbar-nav me-auto">
+
+                    <!--li class="nav-item dropdown d-none d-md-block">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Catalog
+                        </a>
+                        <ul class="dropdown-menu" th:with="params=${products!=null?'?page=1&size='+products.size:''}">
+                            <th:block th:each="cat,info:${catalog.values}">
+                                <li th:if="${(cat.depth==0)&&(info.isFirst==false)}"><hr class="dropdown-divider"></li>
+                                <li><a class="dropdown-item" th:text="${cat.depth!=0?'- ':''}+${cat.name}"
+                                       th:with="aliasUrl=(${cat.alias}+${params})"
+                                       th:href="@{${aliasUrl}}" th:style="'padding-left:'+(${cat.depth}*10+20)+'px'">>Cat</a></li>
+                            </th:block>
+                        </ul>
+                    </li-->
+
+                    <li class="nav-item dropdown d-block d-md-none">
+                        <a class="nav-link dropdown-toggle" data-bs-toggle="collapse" href="#collapseCatalog" role="button" aria-expanded="false" aria-controls="collapseCatalog">
+                            Catalog
+                        </a>
+                        <div class="collapse"  id="collapseCatalog">
+                            <div class="list-group"  th:with="params=${products!=null?'?page=1&size='+products.size:''}">
+                                <th:block th:each="cat,info:${catalog.values}">
+                                    <!--li th:if="${(cat.depth==0)&&(info.isFirst==false)}"><hr class="dropdown-divider"></li-->
+                                    <a class="list-group-item list-group-item-action" th:text="${cat.depth!=0?'- ':''}+${cat.name}"
+                                       th:with="aliasUrl=(${cat.alias}+${params})"
+                                       th:href="@{${aliasUrl}}" th:style="'padding-left:'+(${cat.depth}*10+20)+'px'">>Cat</a>
+                                </th:block>
+                            </div>
+                        </div>
+
+                    </li>
+
+                    <li class="nav-item dropdown d-md-block d-none">
+                        <a class="nav-link dropdown-toggle" data-bs-toggle="collapse" href="#collapseCatalog2" role="button" aria-expanded="false" aria-controls="collapseCatalog2">
+                            Catalog
+                        </a>
+                        <div class="collapse position-absolute shadow-lg" style="width:250px; z-index:100" id="collapseCatalog2">
+                            <div class="list-group"  th:with="params=${products!=null?'?page=1&size='+products.size:''}">
+                                <th:block th:each="cat,info:${catalog.values}">
+                                    <!--li th:if="${(cat.depth==0)&&(info.isFirst==false)}"><hr class="dropdown-divider"></li-->
+                                    <a class="list-group-item list-group-item-action" th:text="${cat.depth!=0?'- ':''}+${cat.name}"
+                                           th:with="aliasUrl=(${cat.alias}+${params})"
+                                           th:href="@{${aliasUrl}}" th:style="'padding-left:'+(${cat.depth}*10+20)+'px'">>Cat</a>
+                                </th:block>
+                                </div>
+                        </div>
+
+                    </li>
+
+                </ul>
+            </div>
+
+
+            <div  class="collapse navbar-collapse dual-collapse2 order-3 w-100">
+                <ul class="navbar-nav ms-auto ">
+                    <li th:unless="${user}" class="nav-item">
+                        <a class="nav-link" th:href="@{/login}">Login</a>
+                    </li>
+
+                    <!--li th:if="${user}" class="nav-item dropdown d-none d-md-block d-md-none">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false" th:text="${(user.name!='')&&(user.name!=null)?user.name:user.email}">
+                            Username
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-end">
+                            <li>
+                                <form class="mb-0" method="post" th:action="@{/logout}">
+                                    <input class="dropdown-item" type="submit" value="Logout"/>
+                                </form>
+                            </li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" href="#">Edit</a></li>
+                            <li sec:authorize="hasAuthority('ADMIN')"><a class="dropdown-item" th:href="@{/admin/product}">Admin page</a></li>
+                        </ul>
+                    </li-->
+
+                    <li th:if="${user}" class="nav-item dropdown d-block d-md-none">
+                        <a class="nav-link dropdown-toggle" href="#userList" role="button" data-bs-toggle="collapse" aria-expanded="false" th:text="${(user.name!='')&&(user.name!=null)?user.name:#strings.substringBefore(user.email,'@')}">
+                            Username
+                        </a>
+                        <div class="list-group collapse" id="userList" >
+                            <form class="mb-0 list-group-item list-group-item-action" method="post" th:action="@{/logout}">
+                                <input class="dropdown-item" type="submit" value="Logout"/>
+                            </form>
+                            <a class="dropdown-item list-group-item list-group-item-action" href="#">Edit</a>
+                            <a sec:authorize="hasAuthority('ADMIN')" class="list-group-item list-group-item-action" th:href="@{/admin/product}">Admin page</a>
+                        </div>
+                    </li>
+
+                    <li th:if="${user}" class="nav-item dropdown d-md-block d-none">
+                        <a class="nav-link dropdown-toggle" href="#userList2" role="button" data-bs-toggle="collapse" aria-expanded="false" th:text="${(user.name!='')&&(user.name!=null)?user.name:#strings.substringBefore(user.email,'@')}">
+                            Username
+                        </a>
+                        <div class="list-group collapse  position-absolute shadow-lg " style="z-index:100" id="userList2" >
+                            <form class="mb-0 list-group-item list-group-item-action" method="post" th:action="@{/logout}">
+                                <input class="dropdown-item" type="submit" value="Logout"/>
+                            </form>
+                            <a class="dropdown-item list-group-item list-group-item-action" href="#">Edit</a>
+                            <a sec:authorize="hasAuthority('ADMIN')" class="list-group-item list-group-item-action" th:href="@{/admin/product}">Admin page</a>
+                        </div>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="/cart">My Cart (<span id="countInCart" th:text="${cartQuantity}">0</span>)</a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="/cart">My Orders</a>
+                    </li>
+
+                    <li >
+
+
+                    </li>
+                </ul>
+            </div>
+
+
+
+        </div>
+    </nav>
+</div>

@@ -1,0 +1,56 @@
+<div xmlns:th="http://www.thymeleaf.org" th:fragment="cartItemCard(cartItem)" class="row row-cols-3 row-cols-md-6 g-3"
+    th:with="href=${catalog.get(cartItem.product.category.id).alias}+'/'+${cartItem.product.alias!=null?cartItem.product.alias+'-id-'+cartItem.product.id:'id-'+cartItem.product.id}">
+    <div class="col-2 col-md-1">
+        <button class="btn btn-danger" onclick="deleteItem(this)" th:data-id="${cartItem.id}">Х</button>
+    </div>
+    <div class="col-md-2">
+            <img th:with="imgs=${#strings.arraySplit(cartItem.product.img,', ')}" th:src="@{/imgs/{img}(img=${imgs[0]})}" class=" w-100 img-fluid rounded-start object-fit-contain">
+    </div>
+    <div class="col-6 col-md-3"><a th:href="@{${href}}" th:text="${cartItem.product.name}">Name</a></div>
+    <div class="col-2 col-md-2">
+        <div class="d-md-block d-none" th:text="${#strings.replace(cartItem.product.price,'.0','')}+' Р'">Цена за шт.</div>
+    </div>
+    <div class="col-md-2">
+        <div class="btn-group mb-2 btn-group-sm">
+            <button type="button" onclick="minus(this)" class="btn btn-outline-primary">-</button>
+            <input type="text"  onfocusout="checkInput(this)" class="btn-outline-primary form-control p-0 rounded-0" th:value="${cartItem.quantity}" style="text-align:center;" name="quantity"/>
+            <button type="button" onclick="plus(this)" class="btn btn-outline-primary">+</button>
+        </div>
+    </div>
+    <h6 class="col-md-2" th:text="${#strings.replace(cartItem.product.price*cartItem.quantity,'.0','')}+' Р'">100 000 Р</h6>
+</div>
+
+
+<!--div class="card mb-3 p-3"
+     xmlns:th="http://www.thymeleaf.org" th:fragment="cartItemCard(cartItem)">
+  <div class="row g-0">
+
+    <div class="col-md-2 m-0" >
+      <img th:with="imgs=${#strings.arraySplit(cartItem.product.img,', ')}" th:src="@{/imgs/{img}(img=${imgs[0]})}" class="img-fluid rounded-start object-fit-contain">
+    </div>
+
+    <div class="col-md-8">
+      <div class="card-body">
+        <h5 class="card-title" th:text="${cartItem.product.name}">Card title</h5>
+
+        <div class="row g-0" style="margin-top:auto">
+          <div class="col-md-6 mb-2">
+            <button class="btn btn-danger">Удалить</button>
+          </div>
+
+          <div class="btn-group col-md-6 mb-2">
+            <button type="button" class="btn btn-outline-primary">-</button>
+            <input type="text"  class="btn-outline-primary form-control" th:value="${cartItem.quantity}" style="text-align:center;" name="quantity"/>
+            <button type="button" class="btn btn-outline-primary">+</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-2 text-center my-auto">
+
+      <h5 th:text="${cartItem.product.price}+' Р'">Price</h5>
+    </div>
+
+  </div>
+</div-->

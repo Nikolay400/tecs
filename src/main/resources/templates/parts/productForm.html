@@ -1,0 +1,29 @@
+<div xmlns:th="http://www.thymeleaf.org" th:fragment="productForm(isNew)">
+    <th:block id="content" th:object="${product}">
+        <form method="post" th:action="@{/admin/product{id}(id=${isNew==true?'':'/'+product.id})}">
+            <div th:if="isNew==false" th:text="'Id: '+*{id}">Id<input type="hidden" name="id" th:value="*{id}"/></div>
+            <div><label>Name: <input type="text" name="name" th:value="*{name}"></label></div>
+            <div><label>Alias: <input type="text" name="alias" th:value="*{alias}"></label></div>
+            <div><label>Price: <input type="text" name="price" th:value="*{price}"></label></div>
+            <div>Category:
+                <select  name="category">
+                    <option  value="" th:attr="selected=${product.category==null?'true':'false'}">None</option>
+                    <option  th:each="category:${categories}" th:value="${category.id}" th:text="${category.name}"
+                             th:attr="selected = ${product.category!=null && product.category.id==category.id?'true':'false'}" >Category</option>
+                </select>
+            </div>
+            <div>Vendor:
+                <select  name="vendor">
+                    <option  value="" th:attr="selected=${product.vendor==null?'true':'false'}" >None</option>
+                    <option  th:each="vendor:${vendors}" th:value="${vendor.id}" th:text="${vendor.name}"
+                             th:attr="selected = ${product.vendor!=null && product.vendor.id==vendor.id?'true':'false'}">Vendor</option>
+                </select>
+            </div>
+            <div><label>Img:<input type="text" name="img" th:value="*{img}"/></label></div>
+            <div><label>Quantity:<input type="text" name="quantity" th:value="*{quantity}"/></label></div>
+            <div>Description:</div>
+            <textarea rows="10" cols="50" name="description" th:text="*{description}" style="resize: none;"></textarea>
+            <input type="submit" th:value="${isNew==true?'Добавить':'Сохранить'}"/>
+        </form>
+    </th:block>
+</div>

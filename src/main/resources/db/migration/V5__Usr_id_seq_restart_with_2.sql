@@ -1,0 +1,1 @@
+alter sequence usr_id_seq restart with 2;

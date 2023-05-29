@@ -1,0 +1,42 @@
+<div xmlns:th="http://www.thymeleaf.org" th:replace="~{parts/common::common(~{::#content},${title})}">
+    <th:block id="content">
+
+            <div class="row">
+                <div class="d-none d-md-block col-3">
+                    <div style="z-index:0" th:replace="~{parts/catalog}"></div>
+                    <div th:replace="~{parts/filtersLeft}">Фильтры</div>
+                </div>
+
+                <div class="col-12 col-md-9">
+                    <div class="row row-cols-1 row-cols-md-2 mt-3 mb-2">
+                        <div class="col-md-8">
+                            <div th:replace="~{parts/breadcrumb}">Breadcrumb</div>
+                        </div>
+                        <div class="col-md-4 d-flex">
+                            <div class="d-block d-md-none justify-content-end" th:if="${(products!=null)&&(currentUrl!='/')}">
+                                <a class="btn btn-primary dropdown-toggle" data-bs-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
+                                    Фильтры
+                                </a>
+                            </div>
+                            <div th:replace="~{parts/sortButton}">SortButton</div>
+                        </div>
+                        <div  th:replace="~{parts/filtersTop}">Filters-Collapse-Part</div>
+                    </div>
+
+                    <h3 th:if="${products==null||products.isEmpty()}">Товаров нет</h3>
+
+                    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-3 pt-3">
+                        <div class="h-75" th:if="${products}" th:each="product:${products}">
+                            <div th:replace="~{parts/productCard::productCard(${product})}">Product Card</div>
+                        </div>
+                    </div>
+                    <th:block th:if="${products}">
+                        <div  th:replace="~{parts/paginator}">Paginator</div>
+                    </th:block>
+
+                </div>
+            </div>
+
+        <script th:src="@{/static/js/product.js}"></script>
+    </th:block>
+</div>

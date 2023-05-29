@@ -1,0 +1,29 @@
+#main-img{
+    height:150px;
+}
+
+@media only screen and (min-width : 300px) {
+    #main-img{
+        height:200px;
+    }
+}
+
+@media only screen and (min-width : 576px) {
+    #main-img{
+        height:300px;
+    }
+}
+
+@media only screen and (min-width : 768px) {
+    #main-img{
+        height:400px;
+    }
+}
+
+@media only screen and (min-width : 1140px) {
+    #main-img{
+        height:500px;
+    }
+}
+
+

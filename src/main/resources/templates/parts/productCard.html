@@ -1,0 +1,27 @@
+<div class="p-0 m-0" xmlns:th="http://www.thymeleaf.org" th:fragment="productCard(product)"
+     th:with="href=${catalog.get(product.category.id).alias}+'/'+${product.alias!=null?product.alias+'-id-'+product.id:'id-'+product.id}">
+
+    <div class="border rounded p-3 mb-0" th:object="${product}">
+      <div class="mx-auto w-100" style="height:200px;">
+        <img th:with="imgs=${#strings.arraySplit(product.img,', ')}" th:src="@{/imgs/{img}(img=${imgs[0]})}" class="w-100 h-100 object-fit-contain">
+      </div>
+
+      <div class="card-body" >
+        <div  style="">
+            <a th:text="${product.name}" th:href="@{${href}}" class="text-center  fs-6"><h5>Product</h5></a>
+        </div>
+
+        <div class="mt-1">
+          <div class="card-text d-flex" style="font-size:15px;" th:each ="desc:${descs.get(product.id)}">
+            <div style="" th:each="d:${desc}" th:text="${d}"></div>
+          </div>
+        </div>
+        <div class="d-flex w-100 mt-2">
+          <h4 class="card-title me-auto" th:text ="*{#strings.replace(price,'.0','')}+' Р'" ></h4>
+          <div th:replace="~{parts/addToCartButton}"></div>
+        </div>
+      </div>
+    </div>
+
+
+</div>

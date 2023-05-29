@@ -1,0 +1,10 @@
+<div xmlns:th="http://www.thymeleaf.org" class="dropdown ms-auto">
+  <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false" th:text="${sort}">
+    Без сортировки
+  </button>
+  <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+    <li><a class="dropdown-item" th:href="@{${urlBuilder.replaceQueryParam('sort', '').replaceQueryParam('page', 1).build().toUriString()}}">Без сортировки</a></li>
+    <li><a class="dropdown-item" th:href="@{${urlBuilder.replaceQueryParam('sort', '').replaceQueryParam('page', 1).build().toUriString()+'&sort=price,asc'}}">Сначала дешевые</a></li>
+    <li><a class="dropdown-item" th:href="@{${urlBuilder.replaceQueryParam('sort', '').replaceQueryParam('page', 1).build().toUriString()+'&sort=price,desc'}}">Сначала дорогие</a></li>
+  </ul>
+</div>

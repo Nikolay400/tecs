@@ -1,0 +1,47 @@
+<div xmlns:th="http://www.thymeleaf.org" th:replace="~{parts/common::common(~{::#content},'Registration')}">
+    <th:block id="content">
+        <div th:replace="~{parts/breadcrumb}">Breadcrumb</div>
+
+
+        <div class="row row-cols-1 row-cols-lg-2" th:with="imgs=${#strings.arraySplit(product.img,', ')}">
+            <div class="row col-lg-8">
+                <div class="col-3 col-lg-2">
+                    <img th:each="img,i:${imgs}" th:src="@{/imgs/{img}(img=${img})}" onclick="changeImg(this)" th:classappend="${i.index==0?'border border-primary':''}" class="img-thumbnail mb-2">
+                </div>
+                <div class="col-9 col-lg-10 d-flex justify-content-center">
+                    <img id="main-img" th:src="@{/imgs/{img}(img=${imgs[0]})}"  />
+                </div>
+            </div>
+
+            <div class="col-lg-4">
+                <h3 th:text="${product.name}">Product Name</h3>
+
+                <div th:each="key:${desc.keySet()}" class="row row-cols-2">
+                    <div th:text="${key}" class="col-8">Key</div>
+                    <div th:text="${desc.get(key)}" class="col-4">Value</div>
+                </div>
+
+                <h3 class="card-title me-auto col-4 mb-2" th:text ="*{#strings.replace(product.price,'.0','')}+' Р'" ></h3>
+
+                <div class="mb-1" style="width:100px;">
+                    <div th:replace="~{parts/addToCartButton}">AddToCartButton</div>
+                </div>
+
+                <a  th:href="@{/cart}">Перейти в корзину</a>
+
+            </div>
+        </div>
+
+        <div th:unless="${moreProducts.isEmpty()}" class="mt-5">
+            <h3>Может быть интересно</h3>
+            <div class="row row-cols-1 row-cols-md-2 row-cols-lg-4 g-3" >
+                <div  class="h-75" th:each="oneMore:${moreProducts}" >
+                    <div th:replace="~{parts/productCard::productCard(${oneMore})}"></div>
+                </div>
+            </div>
+        </div>
+
+        <script th:src="@{/static/js/product.js}"></script>
+    </th:block>
+</div>
+
