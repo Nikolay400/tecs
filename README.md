@@ -1,7 +1,5 @@
 # tecs
 
-http://195.80.238.68
-
 This is my test online shop project, where I used the following technologies:
 - Spring (Boot, MVC, Security, Data JPA, Session)
 - SQL (PostgreSQL)
